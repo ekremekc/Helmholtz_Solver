@@ -2,12 +2,11 @@ import dolfin as dolf
 from math import pi, sqrt
 import matplotlib.pyplot as plt
 import numpy as np
-from helmholtz_solver import helmholtz_pkg
-from helmholtz_pkg.passive_flame import PassiveFlame
-from helmholtz_pkg.flame_transfer_function import n_tau
-from helmholtz_pkg.active_flame import ActiveFlame
-from helmholtz_pkg.eigensolvers import fixed_point_iteration_pep
-from helmholtz_pkg.eigenvectors import normalize_eigenvector
+from helmholtz_solver.helmholtz_pkg.passive_flame import PassiveFlame
+from helmholtz_solver.helmholtz_pkg.flame_transfer_function import n_tau
+from helmholtz_solver.helmholtz_pkg.active_flame import ActiveFlame
+from helmholtz_solver.helmholtz_pkg.eigensolvers import fixed_point_iteration_pep
+from helmholtz_solver.helmholtz_pkg.eigenvectors import normalize_eigenvector
 
 import params
 
