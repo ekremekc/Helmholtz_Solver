@@ -49,7 +49,7 @@ def passive_flame(mesh, boundaries, boundary_conditions,
     u = dolf.TrialFunction(V)
     v = dolf.TestFunction(V)
     # r = dolf.Expression("sqrt(x[0]*x[0] + x[1]*x[1])", degree = degree)
-    r = dolf.Expression("x[0]", degree = degree)
+    r = dolf.Expression("x[1]", degree = degree)
 
     a_ = - c ** 2 * dolf.dot(dolf.grad(u), dolf.grad(v)) *r * dx
     c_ = u * v *r * dx
@@ -81,7 +81,7 @@ class PassiveFlame:
     def __init__(self, mesh, boundaries, boundary_conditions,
                  c, degree=1, constrained_domain=None):
         """
-        
+        AXISYMMETRIC CASE
 
         This class defines the matrices A,B,C in
         A + wB + w^2 C = 0 for the boundary conditions that consist
@@ -118,7 +118,7 @@ class PassiveFlame:
         self.boundary_conditions = boundary_conditions
         self.c = c
         self.degree = degree
-
+        self.r = dolf.Expression("x[1]", degree = degree)
         
 
         self.dx = dolf.Measure('dx', domain=mesh) 
@@ -180,11 +180,11 @@ class PassiveFlame:
         (u_1, u_2) = self.u
         (v_1, v_2) = self.v
 
-        a_11 = - self.c ** 2 * dolf.dot(dolf.grad(v_1), dolf.grad(u_1)) * self.dx
-        a_22 = - self.c ** 2 * dolf.dot(dolf.grad(v_2), dolf.grad(u_2)) * self.dx
+        a_11 = - self.c ** 2 * dolf.dot(dolf.grad(v_1), dolf.grad(u_1)) * self.r * self.dx
+        a_22 = - self.c ** 2 * dolf.dot(dolf.grad(v_2), dolf.grad(u_2)) * self.r * self.dx
         a_ = a_11 + a_22
 
-        dummy = (v_1 + v_2) * self.dx
+        dummy = (v_1 + v_2) * self.r * self.dx
 
         A, b = dolf.assemble_system(a_, dummy, self.bcs)
         A = dolf.as_backend_type(A).mat()
@@ -207,10 +207,10 @@ class PassiveFlame:
                 Y = self.boundary_conditions[i]['Robin']
                 Y_r, Y_i = Y.real, Y.imag
 
-                b_11 = - Y_i * self.c * v_1 * u_1 * self.ds(i)
-                b_12 = - Y_r * self.c * v_1 * u_2 * self.ds(i)
-                b_21 = + Y_r * self.c * v_2 * u_1 * self.ds(i)
-                b_22 = - Y_i * self.c * v_2 * u_2 * self.ds(i)
+                b_11 = - Y_i * self.c * v_1 * u_1 * self.r *  self.ds(i)
+                b_12 = - Y_r * self.c * v_1 * u_2 * self.r * self.ds(i)
+                b_21 = + Y_r * self.c * v_2 * u_1 * self.r * self.ds(i)
+                b_22 = - Y_i * self.c * v_2 * u_2 * self.r * self.ds(i)
 
                 b_ = b_11 + b_12 + b_21 + b_22
 
@@ -249,15 +249,15 @@ class PassiveFlame:
                 Y = self.boundary_conditions[i]['Robin']
                 Y_r, Y_i = Y.real, Y.imag
 
-                b_11_r += - Y_i * self.c * v_1 * u_1 * self.ds(i)
-                b_12_r += - Y_i * self.c * v_1 * u_2 * self.ds(i)
-                b_21_r += - Y_i * self.c * v_2 * u_1 * self.ds(i)
-                b_22_r += - Y_i * self.c * v_2 * u_2 * self.ds(i)
+                b_11_r += - Y_i * self.c * v_1 * u_1 * self.r * self.ds(i)
+                b_12_r += - Y_i * self.c * v_1 * u_2 * self.r* self.ds(i)
+                b_21_r += - Y_i * self.c * v_2 * u_1 * self.r* self.ds(i)
+                b_22_r += - Y_i * self.c * v_2 * u_2 * self.r* self.ds(i)
 
-                b_11_i += + Y_r * self.c * v_1 * u_1 * self.ds(i)
-                b_12_i += + Y_r * self.c * v_1 * u_2 * self.ds(i)
-                b_21_i += + Y_r * self.c * v_2 * u_1 * self.ds(i)
-                b_22_i += + Y_r * self.c * v_2 * u_2 * self.ds(i)
+                b_11_i += + Y_r * self.c * v_1 * u_1 * self.r* self.ds(i)
+                b_12_i += + Y_r * self.c * v_1 * u_2 * self.r* self.ds(i)
+                b_21_i += + Y_r * self.c * v_2 * u_1 * self.r* self.ds(i)
+                b_22_i += + Y_r * self.c * v_2 * u_2 * self.r* self.ds(i)
 
         b_ = (b_11_r, b_12_r, b_21_r, b_22_r, b_11_i, b_12_i, b_21_i, b_22_i)
 
@@ -287,10 +287,10 @@ class PassiveFlame:
                 coeff_r = - z_r * Y_i - z_i * Y_r
                 coeff_i = + z_r * Y_r - z_i * Y_i
 
-                b_11 = + coeff_r * self.c * v_1 * u_1 * self.ds(i)
-                b_12 = - coeff_i * self.c * v_1 * u_2 * self.ds(i)
-                b_21 = + coeff_i * self.c * v_2 * u_1 * self.ds(i)
-                b_22 = + coeff_r * self.c * v_2 * u_2 * self.ds(i)
+                b_11 = + coeff_r * self.c * v_1 * u_1 * self.r* self.ds(i)
+                b_12 = - coeff_i * self.c * v_1 * u_2 * self.r* self.ds(i)
+                b_21 = + coeff_i * self.c * v_2 * u_1 * self.r* self.ds(i)
+                b_22 = + coeff_r * self.c * v_2 * u_2 * self.r* self.ds(i)
 
                 b_ = b_11 + b_12 + b_21 + b_22
 
@@ -308,8 +308,8 @@ class PassiveFlame:
         (u_1, u_2) = self.u
         (v_1, v_2) = self.v
 
-        c_11 = v_1 * u_1 * self.dx
-        c_22 = v_2 * u_2 * self.dx
+        c_11 = v_1 * u_1 * self.r* self.dx
+        c_22 = v_2 * u_2 * self.r* self.dx
         c_   = c_11 + c_22
 
         dummy = (v_1 + v_2) * self.dx
@@ -324,10 +324,10 @@ class PassiveFlame:
         (u_1, u_2) = self.u
         (v_1, v_2) = self.v
 
-        c_11 = v_1 * u_1 * self.dx
-        c_12 = v_1 * u_2 * self.dx
-        c_21 = v_2 * u_1 * self.dx
-        c_22 = v_2 * u_2 * self.dx
+        c_11 = v_1 * u_1 * self.r* self.dx
+        c_12 = v_1 * u_2 * self.r* self.dx
+        c_21 = v_2 * u_1 * self.r* self.dx
+        c_22 = v_2 * u_2 * self.r* self.dx
 
         c_ = (c_11, c_12, c_21, c_22)
 
@@ -350,14 +350,14 @@ class PassiveFlame:
         (u_1, u_2) = self.u
         (v_1, v_2) = self.v
 
-        c_11 = + z_r * v_1 * u_1 * self.dx
-        c_12 = - z_i * v_1 * u_2 * self.dx
-        c_21 = + z_i * v_2 * u_1 * self.dx
-        c_22 = + z_r * v_2 * u_2 * self.dx
+        c_11 = + z_r * v_1 * u_1 * self.r* self.dx
+        c_12 = - z_i * v_1 * u_2 * self.r* self.dx
+        c_21 = + z_i * v_2 * u_1 * self.r* self.dx
+        c_22 = + z_r * v_2 * u_2 * self.r* self.dx
 
         c_ = c_11 + c_12 + c_21 + c_22
 
-        dummy = (v_1 + v_2) * self.dx
+        dummy = (v_1 + v_2) * self.r* self.dx
 
         Matrix, b = dolf.assemble_system(c_, dummy, self.bcs)
         [bc.zero(Matrix) for bc in self.bcs]
