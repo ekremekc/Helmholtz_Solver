@@ -9,7 +9,7 @@ class ActiveFlame:
 
     gamma = 1.4
 
-    def __init__(self, mesh, subdomains, x_f, x_r, rho_u, Q, U, FTF, degree=1, comm=None,
+    def __init__(self, mesh, subdomains, x_r, rho_u, Q, U, FTF, degree=1, comm=None,
                  constrained_domain=None):
         """
         The Active Flame class which consist required matrices for solution
@@ -51,7 +51,6 @@ class ActiveFlame:
 
         self.mesh = mesh
         self.subdomains = subdomains
-        self.x_f = x_f
         self.x_r = x_r
         self.rho_u = rho_u
         self.Q = Q
@@ -146,15 +145,18 @@ class ActiveFlame:
         """
 
         (v_1, v_2) = dolf.TestFunction(self.function_space)
-        dx = dolf.Measure('dx', subdomain_data=self.subdomains)
+        dV = dolf.Measure('dx', subdomain_data=self.subdomains)
 
         V = dolf.FunctionSpace(self.mesh, 'CG', 1)
-        const = dolf.interpolate(dolf.Constant(1), V)
-        V_fl = 2 * np.pi * dolf.assemble(const * self.r * dx(fl))
-
-        a_1 =  dolf.assemble(v_1 / V_fl * self.r * dx(fl))
-        a_2 =  dolf.assemble(v_2 / V_fl * self.r * dx(fl))
-
+        area = dolf.interpolate(dolf.Constant(1), V)
+        V_fl =   dolf.assemble(2*np.pi*area * self.r * dV(fl))
+        # V_fl =   dolf.assemble(area * self.r * dV(fl))
+        print(fl,"Flame volume: ",V_fl,
+              "Theroetical volume: ", 0.05*np.pi*(0.047/2)**2)
+        a_1 =  dolf.assemble(v_1 / V_fl * self.r * dV(fl))
+        a_2 =  dolf.assemble(v_2 / V_fl * self.r * dV(fl))
+        
+        
         dofmap = self.function_space.dofmap()
 
         a_1 = self._helper_func(a_1, dofmap)
@@ -215,10 +217,11 @@ class ActiveFlame:
                 d_dx = element.evaluate_basis_derivatives_all(1, x, cell.get_vertex_coordinates(), cell.orientation())
 
                 d_dx = d_dx.reshape((len(cell_dofs), -1))
-
+                # print(d_dx)
                 d_dv = np.dot(d_dx, v)
+                # print(d_dv)
                 d_dv = d_dv[:, 0]
-                
+                # print(d_dv)
                 my_list = []
 
                 for i, dof in enumerate(cell_dofs):
@@ -273,7 +276,7 @@ class ActiveFlame:
         
         """
 
-        num_fl = len(self.x_f)  # number of flames
+        num_fl = len(self.x_r)  # number of flames
         global_size = self.function_space.dim()
         local_size = len(self.function_space.dofmap().dofs())
 

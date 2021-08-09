@@ -1,6 +1,6 @@
 import dolfin as dolf
 from petsc4py import PETSc
-
+from math import pi
 
 def passive_flame(mesh, boundaries, boundary_conditions,
                   c, degree=1, constrained_domain=None):
@@ -48,10 +48,9 @@ def passive_flame(mesh, boundaries, boundary_conditions,
 
     u = dolf.TrialFunction(V)
     v = dolf.TestFunction(V)
-    # r = dolf.Expression("sqrt(x[0]*x[0] + x[1]*x[1])", degree = degree)
     r = dolf.Expression("x[1]", degree = degree)
 
-    a_ = - c ** 2 * dolf.dot(dolf.grad(u), dolf.grad(v)) *r * dx
+    a_ = - c ** 2 * dolf.dot(dolf.grad(u), dolf.grad(v)) * r * dx
     c_ = u * v *r * dx
 
     dummy = v * dx
@@ -118,7 +117,7 @@ class PassiveFlame:
         self.boundary_conditions = boundary_conditions
         self.c = c
         self.degree = degree
-        self.r = dolf.Expression("x[1]", degree = degree)
+        self.r =  dolf.Expression("x[1]", degree = degree)
         
 
         self.dx = dolf.Measure('dx', domain=mesh) 
