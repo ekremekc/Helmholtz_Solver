@@ -9,7 +9,7 @@ class ActiveFlame:
 
     gamma = 1.4
 
-    def __init__(self, mesh, subdomains, x_f, x_r, rho_u, Q, U, FTF, degree=1, comm=None,
+    def __init__(self, mesh, subdomains, x_r, rho_u, Q, U, FTF, degree=1, comm=None,
                  constrained_domain=None):
         """
         The Active Flame class which consist required matrices for solution
@@ -51,7 +51,6 @@ class ActiveFlame:
 
         self.mesh = mesh
         self.subdomains = subdomains
-        self.x_f = x_f
         self.x_r = x_r
         self.rho_u = rho_u
         self.Q = Q
@@ -151,7 +150,7 @@ class ActiveFlame:
         V = dolf.FunctionSpace(self.mesh, 'CG', 1)
         const = dolf.interpolate(dolf.Constant(1), V)
         V_fl = dolf.assemble(const * dx(fl))
-
+        
         a_1 =  dolf.assemble(v_1 / V_fl * dx(fl))
         a_2 =  dolf.assemble(v_2 / V_fl * dx(fl))
 
@@ -161,7 +160,7 @@ class ActiveFlame:
         a_2 = self._helper_func(a_2, dofmap)
         
         a = (a_1, a_2)
-        print(type(dofmap))
+
         return a
 
     def _assemble_right_vector(self, x):
@@ -273,7 +272,7 @@ class ActiveFlame:
         
         """
 
-        num_fl = len(self.x_f)  # number of flames
+        num_fl = len(self.x_r)  # number of flames
         global_size = self.function_space.dim()
         local_size = len(self.function_space.dofmap().dofs())
 

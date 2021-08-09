@@ -3,7 +3,7 @@ import dolfin as dolf
 import os
 import pickle
 
-from helmholtz_pkg.xdmf_utils import save_xdmf
+from helmholtz_solver.helmholtz_pkg.xdmf_utils import save_xdmf
 
 from math import pi
 
