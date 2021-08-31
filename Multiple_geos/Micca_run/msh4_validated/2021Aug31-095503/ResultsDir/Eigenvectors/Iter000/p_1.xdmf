@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<Xdmf Version="3.0">
+  <Domain>
+    <Grid GridType="Collection" CollectionType="Temporal" Name="f">
+      <Grid Name="f_0" GridType="Uniform">
+        <Topology NumberOfElements="16142" TopologyType="Tetrahedron" NodesPerElement="4">
+          <DataItem Dimensions="16142 4" NumberType="UInt" Format="HDF">p_1.h5:f/f_0/mesh/topology</DataItem>
+        </Topology>
+        <Geometry GeometryType="XYZ">
+          <DataItem Dimensions="4160 3" Format="HDF">p_1.h5:f/f_0/mesh/geometry</DataItem>
+        </Geometry>
+        <Time Value="0.000000" />
+        <Attribute ItemType="FiniteElementFunction" ElementFamily="CG" ElementDegree="2" ElementCell="tetrahedron" Name="f" Center="Other" AttributeType="Scalar">
+          <DataItem Dimensions="161420 1" NumberType="UInt" Format="HDF">p_1.h5:f/f_0/cell_dofs</DataItem>
+          <DataItem Dimensions="27390 1" NumberType="Float" Format="HDF">p_1.h5:f/f_0/vector</DataItem>
+          <DataItem Dimensions="16143 1" NumberType="UInt" Format="HDF">p_1.h5:f/f_0/x_cell_dofs</DataItem>
+          <DataItem Dimensions="16142 1" NumberType="UInt" Format="HDF">p_1.h5:f/f_0/cells</DataItem>
+        </Attribute>
+      </Grid>
+      <Grid Name="f_1" GridType="Uniform">
+        <Topology NumberOfElements="16142" TopologyType="Tetrahedron" NodesPerElement="4">
+          <DataItem Dimensions="16142 4" NumberType="UInt" Format="HDF">p_1.h5:f/f_1/mesh/topology</DataItem>
+        </Topology>
+        <Geometry GeometryType="XYZ">
+          <DataItem Dimensions="4160 3" Format="HDF">p_1.h5:f/f_1/mesh/geometry</DataItem>
+        </Geometry>
+        <Time Value="1.000000" />
+        <Attribute ItemType="FiniteElementFunction" ElementFamily="CG" ElementDegree="2" ElementCell="tetrahedron" Name="f" Center="Other" AttributeType="Scalar">
+          <DataItem Dimensions="161420 1" NumberType="UInt" Format="HDF">p_1.h5:f/f_1/cell_dofs</DataItem>
+          <DataItem Dimensions="27390 1" NumberType="Float" Format="HDF">p_1.h5:f/f_1/vector</DataItem>
+          <DataItem Dimensions="16143 1" NumberType="UInt" Format="HDF">p_1.h5:f/f_1/x_cell_dofs</DataItem>
+          <DataItem Dimensions="16142 1" NumberType="UInt" Format="HDF">p_1.h5:f/f_1/cells</DataItem>
+        </Attribute>
+      </Grid>
+    </Grid>
+  </Domain>
+</Xdmf>

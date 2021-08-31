@@ -1,0 +1,5 @@
+meshio-convert ../plenum.msh plenum.vtk
+meshio-convert ../burner.msh burner.vtk
+meshio-convert ../injection.msh injection.vtk
+meshio-convert ../flame.msh flame.vtk
+meshio-convert ../chamber.msh chamber.vtk
