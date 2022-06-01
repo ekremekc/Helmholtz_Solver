@@ -1,0 +1,95 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amsfonts, amssymb}
+
+%\usepackage{pdfpages}
+
+
+%Import graphs
+\usepackage{graphicx}
+\usepackage{caption,subcaption}
+\usepackage[section]{placeins}
+\usepackage{float}
+\usepackage{multicol}
+\usepackage{makecell}
+\usepackage{adjustbox}
+
+%color for headings
+\usepackage{sectsty}
+\chapterfont{\color{YellowOrange}}  % sets colour of chapters
+\allsectionsfont{\color{green!5!orange!90!}}  % sets colour of sections
+%\captionsetup[figure]{labelfont={color=cyan}}
+\captionsetup{labelfont={color=cyan}}
+
+\newcommand\blankpage{%
+	\null
+	\thispagestyle{empty}%
+	\addtocounter{page}{-1}%
+	\newpage}
+%\usepackage{chngcntr} %counter in appendix
+%TOC BACKGROUND COLOR
+\usepackage{tcolorbox}
+
+%Bibliography style
+%\usepackage[square,numbers]{natbib} %% Own document-numbered style
+
+\usepackage{natbib} %% For MSc Thesis
+
+\graphicspath{{gfx/}}
+\usepackage[title]{appendix}
+
+\usepackage[hidelinks]{hyperref}
+\usepackage{tocbibind}
+
+%\includeonly{frontmatter/titlenew} %mainmatter/results, frontmatter/abstract, mainmatter/numerics, mainmatter/introduction
+
+%PARAGRAPH SETTINGS
+\setlength{\parindent}{12pt}
+\numberwithin{equation}{section}
+\usepackage{array}
+%\usepackage[table]{xcolor} % Highlight table row
+
+
+\begin{document}
+	
+
+\include{frontmatter/title}
+%\include{frontmatter/cover}
+%\include{frontmatter/titlenew}
+\pagenumbering{roman}
+%\include{frontmatter/abstract}
+%\include{frontmatter/acknowledgements}
+
+\pagenumbering{arabic}
+
+\begin{tcolorbox}[colback=green!5,arc=5pt,opacityframe=0]
+	\tableofcontents
+\end{tcolorbox}
+\input{mainmatter/introduction}
+
+\input{mainmatter/numerics}
+\input{mainmatter/codework}
+\input{mainmatter/results}
+%\include{mainmatter/conclusion}
+
+
+
+%\bibliographystyle{plainnat}  %% Own document-numbered style
+\bibliographystyle{apalike}    %% For MSc Thesis
+%\bibliographystyle{agsm} %% Harvard Reference Style
+
+%\bibliography{mybib1}
+%\include{backmatter/references}
+%\include{backmatter/appendix}
+%\include{backmatter/backcover}
+
+
+
+
+
+%
+
+
+
+\end{document}

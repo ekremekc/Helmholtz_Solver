@@ -1,0 +1,9 @@
+\contentsline {section}{Contents}{1}{section*.1}
+\contentsline {section}{\numberline {1}Motivation}{1}{section.1}
+\contentsline {section}{\numberline {2}Mathematical Model}{1}{section.2}
+\contentsline {subsection}{\numberline {2.1}Governing Equations}{2}{subsection.2.1}
+\contentsline {section}{\numberline {3}Numerical Methods}{3}{section.3}
+\contentsline {section}{\numberline {4}Codework}{3}{section.4}
+\contentsline {subsection}{\numberline {4.1}Why Julia Programming Language?}{3}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Programming Methodology}{3}{subsection.4.2}
+\contentsline {section}{\numberline {5}Results}{4}{section.5}

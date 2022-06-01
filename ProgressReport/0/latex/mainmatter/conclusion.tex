@@ -1,0 +1,21 @@
+\cleardoublepage
+\phantomsection
+\section{Conclusion and Future Work}
+
+Supersonic nozzle design by different numeric approximations have been investigated in this study. Firstly, quasi-one dimensional fluid flow analysis of case study has been carried out. Useful one dimensional compressible flow library is developed in Python programming language. Therefore, supersonic flow domain is considered as two dimensional compressible flow and Prandtl-Meyer expansion waves are discussed. Method of characteristics is enabled to find out wall coordinates of supersonic section of rocket nozzle. Each characteristic lines combined with parameters of expansion waves such as Prandtl-Meyer angle, Mach number and Mach angle at certain points in two dimensional domain. Similarly, Python programming language was used to program the method of characteristics.
+
+Generated wall points that obtained by method of characteristics have exported to open-source mesh software Salome to split domain into small grids. Then, meshed geometry is exported to finite volume code to perform computational fluid dynamics analysis. rhoPimpleFoam was utilized as a solver in OpenFOAM open-source framework.
+Obtained results indicated that Mach number and temperature distributions along supersonic section are consistent by applying both method of characteristics and computational fluid dynamics.
+
+Taken together, these findings suggest the application of method of characteristics and computational fluid dynamics to  observe supersonic nozzle flow along rocket nozzle. In spite of the fact that quasi-one dimensional analysis can explain only cross-sectional information, method of characteristics is demonstrated its robust approach to determine nozzle length. In addition to this, computational fluid dynamics analysis confirmed this approach by getting similar contours.
+
+Future work will concentrate on the following topics;
+\begin{itemize}
+	\item Potential shock waves along supersonic flow domain will be considered in OpenFOAM simulations.
+	\item Combustion chamber of such a nozzle will be designed and computational fluid dynamics analysis will be performed.
+	\item One dimensional Python library will be extended to two dimensional compressible flow by consisting of Prandtl-Meyer expansion wave theory.
+	\item More realistic approximations will be made at exit of the nozzle to better understanding of the complex phenomena behind shock waves (such diamond diamond shocks).
+	\item Density based compressible flow solver rhoCentralFoam simulations will be stabilized. This solver originally designed to investigate high speed compressible flows and strong shock waves. Hence, it gives more accurate results than pressure-based solvers (rhoSimpleFoam, rhoPimpleFoam).
+	\item Nozzle design graphical user interface will be developed in Java programming language.
+	\item High speed flows are generally turbulent. So that turbulence models will be considered for further simulations. These results can demonstrate trustworthy roadmap to manufacture rocket nozzles.
+\end{itemize} 
